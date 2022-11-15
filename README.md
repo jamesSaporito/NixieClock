@@ -10,7 +10,7 @@ The tubes used are four IN-12A, which require ~170V DC to illuminate. The
 [NCH8200HV](https://omnixie.com/products/nch8200hv-nixie-hv-power-module)
 is used to generate this voltage. Note that this voltage can be very dangerous if not handled with care! The mechanical switch cuts power from this module, which allows the tubes to be turned off. This avoids wasted power as well as less heat generated.
 
-The nixie tubes are driven from four [K155ID1](https://tubehobby.com/datasheets/k155id1.pdf) ICs, one IC per tube. These are very obsolite, but were made specifically to drive nixie tubes. The microcontroller used for this project is the [STM32L010K4T6](https://www.st.com/en/microcontrollers-microprocessors/stm32l010k4.html), an Arm Cortex-M0+ MCU. The MCUs RTC is used along with an external 32.768 kHz crystal to keep more accurate time. Based on the one I've built myself, it consistently gains around two seconds per day.
+The nixie tubes are driven from four [K155ID1](https://tubehobby.com/datasheets/k155id1.pdf) ICs, one IC per tube. These are very obsolete, but were made specifically to drive nixie tubes. The microcontroller used for this project is the [STM32L010K4T6](https://www.st.com/en/microcontrollers-microprocessors/stm32l010k4.html), an Arm Cortex-M0+ MCU. The MCUs RTC is used along with an external 32.768 kHz crystal to keep more accurate time. Based on the one I've built myself, it consistently gains around two seconds per day.
 
 # PCB
 
