@@ -1,5 +1,12 @@
 # MACOS
 .DS_Store
+.osx.project
+
+# JetBrains
+.idea
+
+# CMake
+cmake-build-*/
 
 # KICAD
 # For PCBs designed using KiCad: https://www.kicad.org/
