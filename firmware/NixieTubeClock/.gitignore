@@ -1,0 +1,13 @@
+# Mac
+.osx.project
+
+# JetBrains
+.idea
+
+# CMake
+cmake-build-*/
+
+# Eclipse/STM32CubeIDE
+Debug
+*.settings
+*.launch

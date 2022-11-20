@@ -31,6 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,6 +43,13 @@
 RTC_HandleTypeDef hrtc;
 
 /* USER CODE BEGIN PV */
+
+/**
+ * Current minute/hour to know when to change the time on the nixie tubes.
+ * This is just a copy of what the RTC values are.
+ */
+uint8_t current_minute = 0;
+uint8_t current_hour = 0;
 
 /* USER CODE END PV */
 
@@ -95,6 +103,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+      /**
+       * Although the date isn't used anywhere, you have to read it in
+       * order to get the time.
+       */
+      HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BCD);
+      HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BCD);
+
+      /**
+       * Only update the tubes if the RTC minute or hour has changed
+       */
+      if (current_minute != time.Minutes || current_hour != time.Hours) {
+          current_minute = time.Minutes;
+          current_hour = time.Hours;
+          display_time();
+      }
+
+      /**
+       * Avoid cathode poisoning by occasionally cycling through the numbers.
+       */
+      if (check_cycle()) {
+          cycle();
+          display_time();
+      }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -192,6 +224,8 @@ static void MX_RTC_Init(void)
   }
   /* USER CODE BEGIN RTC_Init 2 */
 
+  set_initial_time();
+
   /* USER CODE END RTC_Init 2 */
 
 }
@@ -211,43 +245,102 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
-                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_15, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, NX1_C_Pin|NX1_B_Pin|NX1_D_Pin|NX1_A_Pin
+                          |NX2_C_Pin|NX2_A_Pin|NX3_C_Pin|NX3_B_Pin
+                          |NX3_D_Pin|NX3_A_Pin|NX4_C_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4
-                          |GPIO_PIN_5, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, NX2_B_Pin|NX2_D_Pin|NX4_B_Pin|NX4_D_Pin
+                          |NX4_A_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA1 PA2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
+  /*Configure GPIO pins : Minute_Increment_Pin Hour_Increment_Pin */
+  GPIO_InitStruct.Pin = Minute_Increment_Pin|Hour_Increment_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA3 PA4 PA5 PA6
-                           PA7 PA8 PA9 PA10
-                           PA11 PA12 PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
-                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10
-                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_15;
+  /*Configure GPIO pins : NX1_C_Pin NX1_B_Pin NX1_D_Pin NX1_A_Pin
+                           NX2_C_Pin NX2_A_Pin NX3_C_Pin NX3_B_Pin
+                           NX3_D_Pin NX3_A_Pin NX4_C_Pin */
+  GPIO_InitStruct.Pin = NX1_C_Pin|NX1_B_Pin|NX1_D_Pin|NX1_A_Pin
+                          |NX2_C_Pin|NX2_A_Pin|NX3_C_Pin|NX3_B_Pin
+                          |NX3_D_Pin|NX3_A_Pin|NX4_C_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB0 PB1 PB3 PB4
-                           PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4
-                          |GPIO_PIN_5;
+  /*Configure GPIO pins : NX2_B_Pin NX2_D_Pin NX4_B_Pin NX4_D_Pin
+                           NX4_A_Pin */
+  GPIO_InitStruct.Pin = NX2_B_Pin|NX2_D_Pin|NX4_B_Pin|NX4_D_Pin
+                          |NX4_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
+
+void set_initial_time(void)
+{
+    time.Hours = 12;
+    time.Minutes = 0;
+    time.Seconds = 0;
+    time.TimeFormat = RTC_HOURFORMAT12_PM;
+    HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BCD);
+}
+
+void increment_minute(void)
+{
+    time.Seconds = 0x00;
+    if (time.Minutes == 0x59) {
+        time.Minutes = 0x00;
+    } else {
+        time.Minutes = RTC_ByteToBcd2(RTC_Bcd2ToByte(time.Minutes) + 0x01);
+    }
+
+    HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BCD);
+}
+
+void increment_hour(void)
+{
+    time.Seconds = 0x00;
+    if (time.Hours == 0x12) {
+        time.Hours = 0x01;
+    } else {
+        time.Hours = RTC_ByteToBcd2(
+                RTC_Bcd2ToByte(time.Hours) + 0x01
+        );
+    }
+
+    HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BCD);
+}
+
+/**
+ * Interrupt to set flag, which allows the main loop to increment the hour or minute
+ */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    switch (GPIO_Pin) {
+        case GPIO_PIN_1:
+            increment_hour();
+            break;
+        case GPIO_PIN_2:
+            increment_minute();
+            break;
+        default:
+            break;
+    }
+}
 
 /* USER CODE END 4 */
 
