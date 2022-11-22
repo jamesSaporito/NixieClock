@@ -31,9 +31,17 @@ for the screws to secure everything.
 
 The `PCB Spacers` are used for additional support between the boards. Without these, the boards can bend toward each other at the header pins and put stress on everything. Three of these spacers can be mounted while screwing the boards onto the front plate.
 
+## Design Flaws
+
+Due to the PCB using a Tag-Connect footprint for programming, the enclosure design pretty much requires the MCU to be programmed prior to assembling everything. If there is a desire to upload different firmware, then it will mostly have to be taken apart.
+
+The DC jack that was used for this design requires to be mounted prior to soldering the wires to it. This restricts the enclosure from being completely removed without cutting the wires to this jack. This can easily be changed for a different style jack.
+
 # Firmware
 
-Code needs to be added. It's just a basic STM32 project that interacts with the tube drivers to display different numbers based on the RTC values.
+The firmware is a standard STM32 project set up using CLion and its integration with STM32CubeMX.
+
+The only important thing to keep some form of is the `cycle()` function, which is found in `Core/Src/nixie_display.c`. All this does is cycle through each number on every tube, which is supposed to prevent cathode poisoning (frequency and duration probably needs adjusted).
 
 ## Programming the MCU
 
@@ -42,3 +50,7 @@ In order to avoid additional hardware, a
 footprint is used on the main board. This is used with an
 [ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html)
 device (clones should work just fine) to program the MCU.
+
+### Issues
+
+Unfortunately, using [stlink](https://github.com/stlink-org/stlink) doesn't seem to work with this particular MCU. To get around this, the project can be opened up in STM32CubeIDE and flashed using the built in debugging feature. Not ideal, but it works.

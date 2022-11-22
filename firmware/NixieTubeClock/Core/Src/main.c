@@ -292,9 +292,9 @@ static void MX_GPIO_Init(void)
 
 void set_initial_time(void)
 {
-    time.Hours = 12;
-    time.Minutes = 0;
-    time.Seconds = 0;
+    time.Hours = 0x12;
+    time.Minutes = 0x00;
+    time.Seconds = 0x00;
     time.TimeFormat = RTC_HOURFORMAT12_PM;
     HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BCD);
 }

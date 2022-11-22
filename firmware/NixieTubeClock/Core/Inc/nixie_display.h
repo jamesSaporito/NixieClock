@@ -11,6 +11,7 @@
 #define HI_NIBBLE(byte) (((byte) >> 4) & 0x0F)
 #define LO_NIBBLE(byte) ((byte) & 0x0F)
 #define CYCLE_DELAY_TIME 50
+#define CYCLE_FREQ 10
 
 extern RTC_TimeTypeDef time;
 extern RTC_DateTypeDef date;

@@ -68,28 +68,18 @@ void display_zero(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_7 | GPIO_PIN_8;
+            GPIOB->BRR = GPIO_PIN_0 | GPIO_PIN_1;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
             break;
         default:
             break;
@@ -100,28 +90,22 @@ void display_one(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_7;
+            GPIOB->BRR = GPIO_PIN_0 | GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_8;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
+            GPIOA->BSRR = GPIO_PIN_12;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_3 | GPIO_PIN_4;
+            GPIOB->BSRR = GPIO_PIN_5;
             break;
         default:
             break;
@@ -132,28 +116,22 @@ void display_two(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_5 | GPIO_PIN_6;
+            GPIOA->BSRR = GPIO_PIN_4;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_7 | GPIO_PIN_8;
+            GPIOB->BRR = GPIO_PIN_1;
+            GPIOB->BSRR = GPIO_PIN_0;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_11 | GPIO_PIN_12;
+            GPIOA->BSRR = GPIO_PIN_10;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_4 | GPIO_PIN_5;
+            GPIOB->BSRR = GPIO_PIN_3;
             break;
         default:
             break;
@@ -164,28 +142,23 @@ void display_three(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_4 | GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_7;
+            GPIOB->BRR = GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_8;
+            GPIOB->BSRR = GPIO_PIN_0;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_11;
+            GPIOA->BSRR = GPIO_PIN_10 | GPIO_PIN_12;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_4;
+            GPIOB->BSRR = GPIO_PIN_3 | GPIO_PIN_5;
             break;
         default:
             break;
@@ -196,28 +169,21 @@ void display_four(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
+            GPIOA->BSRR = GPIO_PIN_3;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_8;
+            GPIOB->BRR = GPIO_PIN_0 | GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_7;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12;
+            GPIOA->BSRR = GPIO_PIN_9;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            GPIOB->BRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_15;
             break;
         default:
             break;
@@ -228,29 +194,21 @@ void display_five(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_4 | GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_3 | GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+            GPIOB->BRR = GPIO_PIN_0 | GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_7 | GPIO_PIN_8;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_10 | GPIO_PIN_11;
+            GPIOA->BSRR = GPIO_PIN_9 | GPIO_PIN_12;
             break;
         case 3:
-
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+            GPIOB->BRR = GPIO_PIN_3 | GPIO_PIN_4;
+            GPIOA->BSRR = GPIO_PIN_15;
+            GPIOB->BSRR = GPIO_PIN_5;
             break;
         default:
             break;
@@ -261,28 +219,23 @@ void display_six(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_5 | GPIO_PIN_6;
+            GPIOA->BSRR = GPIO_PIN_3 | GPIO_PIN_4;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_8;
+            GPIOB->BRR = GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_7;
+            GPIOB->BSRR = GPIO_PIN_0;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_11 | GPIO_PIN_12;
+            GPIOA->BSRR = GPIO_PIN_9 | GPIO_PIN_10;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            GPIOB->BRR = GPIO_PIN_4 | GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_15;
+            GPIOB->BSRR = GPIO_PIN_3;
             break;
         default:
             break;
@@ -293,28 +246,22 @@ void display_seven(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_5;
+            GPIOA->BSRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+            GPIOB->BRR = GPIO_PIN_1;
+            GPIOA->BSRR = GPIO_PIN_7 | GPIO_PIN_8;
+            GPIOB->BSRR = GPIO_PIN_0;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_11;
+            GPIOA->BSRR = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_12;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+            GPIOB->BRR = GPIO_PIN_4;
+            GPIOA->BSRR = GPIO_PIN_15;
+            GPIOB->BSRR = GPIO_PIN_3 | GPIO_PIN_5;
             break;
         default:
             break;
@@ -325,28 +272,22 @@ void display_eight(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_6;
+            GPIOA->BSRR = GPIO_PIN_5;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_7 | GPIO_PIN_8;
+            GPIOB->BRR = GPIO_PIN_0;
+            GPIOB->BSRR = GPIO_PIN_1;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_12;
+            GPIOA->BSRR = GPIO_PIN_11;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_3 | GPIO_PIN_5;
+            GPIOB->BSRR = GPIO_PIN_4;
             break;
         default:
             break;
@@ -357,28 +298,23 @@ void display_nine(uint8_t tube)
 {
     switch(tube) {
         case 0:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_3 | GPIO_PIN_4;
+            GPIOA->BSRR = GPIO_PIN_5 | GPIO_PIN_6;
             break;
         case 1:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_7;
+            GPIOB->BRR = GPIO_PIN_0;
+            GPIOA->BSRR = GPIO_PIN_8;
+            GPIOB->BSRR = GPIO_PIN_1;
             break;
         case 2:
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_9 | GPIO_PIN_10;
+            GPIOA->BSRR = GPIO_PIN_11 | GPIO_PIN_12;
             break;
         case 3:
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+            GPIOA->BRR = GPIO_PIN_15;
+            GPIOB->BRR = GPIO_PIN_3;
+            GPIOB->BSRR = GPIO_PIN_4 | GPIO_PIN_5;
             break;
         default:
             break;
@@ -389,9 +325,9 @@ bool check_cycle(void)
 {
     uint16_t convertedMinutes = (HI_NIBBLE(time.Minutes) * 10) + LO_NIBBLE(time.Minutes);
 
-    if (convertedMinutes % 15 == 0
+    if (convertedMinutes % CYCLE_FREQ == 0
         && convertedMinutes != 0
-        && (cycled_minute != convertedMinutes || cycled_minute == 0x00)
+        && (cycled_minute != convertedMinutes || cycled_minute == 0)
     ) {
         cycled_minute = convertedMinutes;
         return true;
