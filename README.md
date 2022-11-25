@@ -53,4 +53,10 @@ device (clones should work just fine) to program the MCU.
 
 ### Issues
 
-Unfortunately, using [stlink](https://github.com/stlink-org/stlink) doesn't seem to work with this particular MCU. To get around this, the project can be opened up in STM32CubeIDE and flashed using the built in debugging feature. Not ideal, but it works.
+Unfortunately, using 
+[stlink](https://github.com/stlink-org/stlink)
+doesn't seem to work with
+[several STM32L0xxx MCUs](https://github.com/stlink-org/stlink/issues/1203).
+To get around this, the project can be opened up in STM32CubeIDE and flashed using the built in debugging functionality. Not ideal, but it works.
+
+* STLink GitHub issue: [1203](https://github.com/stlink-org/stlink/issues/1203)
