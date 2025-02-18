@@ -1,12 +1,12 @@
 # Nixie Clock Overview
 
-This is a nixie tube clock that tells basic time. Two pushbuttons are used to set the time, one for the hour and the other for the minute, and a mechanical switch turns the tubes on and off.
+This is a nixie tube clock that tells basic time. Two push buttons are used to set the time, one for the hour and the other for the minute, and a mechanical switch turns the tubes on and off.
 
 More info about [Nixie Tubes](https://en.wikipedia.org/wiki/Nixie_tube).
 
 # Core Components
 
-The tubes used are four IN-12A, which require ~170V DC to illuminate. The
+Four IN-12A nixie tubes are used, which require ~170V DC to illuminate. The
 [NCH8200HV](https://omnixie.com/products/nch8200hv-nixie-hv-power-module)
 is used to generate this voltage. The mechanical switch cuts power from this module, which allows the tubes to be turned off.
 
@@ -54,7 +54,7 @@ The DC jack that was used for this design requires to be mounted prior to solder
 
 The firmware is a standard STM32 project set up using CLion and its integration with STM32CubeMX.
 
-The only important thing to keep some form of is the `cycle()` function, which is found in `Core/Src/nixie_display.c`. All this does is cycle through each number on every tube, which is supposed to prevent cathode poisoning (frequency and duration probably needs adjusted).
+The only important thing to keep some form of is the `cycle()` function, which is found in `Core/Src/nixie_display.c`. All this does is cycle through each number on every tube, which is supposed to prevent cathode poisoning. Unsure how effective this is at the current frequency and duration.
 
 ## Programming the MCU
 
